@@ -22,7 +22,7 @@ const { title } = Astro.props;
 		<div id="content">
 			<slot />
 		</div>
-		<footer class="text-center opacity-70 py-10 text-sm">
+		<footer class="text-center opacity-70 py-10 text-sm text-black">
 			Marcos Corrales Castro
 		</footer>
 	</body>
@@ -43,6 +43,12 @@ const { title } = Astro.props;
 
 	@keyframes fade-in {
 		from { opacity: 0; }
+	}
+	body {
+		color: #F6F6F6;
+	}
+	#content {
+		color: black !important;
 	}
 </style>
 
