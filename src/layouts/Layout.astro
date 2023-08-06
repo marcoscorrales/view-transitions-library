@@ -1,5 +1,5 @@
---- 
-interface Props {
+---
+export interface Props {
 	title: string;
 }
 
@@ -22,8 +22,30 @@ const { title } = Astro.props;
 		<div id="content">
 			<slot />
 		</div>
+		<footer class="text-center opacity-70 py-10 text-sm">
+			Marcos Corrales Castro
+		</footer>
 	</body>
 </html>
+<style is:global>
+	:root {
+		--accent: 124, 58, 237;
+		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
+	}
+	html {
+		font-family: system-ui, sans-serif;
+		background-color: #F6F6F6;
+	}
+	code {
+		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+			Bitstream Vera Sans Mono, Courier New, monospace;
+	}
+
+	@keyframes fade-in {
+		from { opacity: 0; }
+	}
+</style>
+
 <script>
 	if (document.startViewTransition) {
 		window.navigation.addEventListener('navigate', (event) => {
@@ -41,11 +63,12 @@ const { title } = Astro.props;
 					const text = await response.text()
 					// quedarnos sólo con el contenido del html dentro de la etiqueta body
 					// usamos un regex para extraerlo
-					const [, data] = text.match(/<body>([\s\S]*)<\/body>/i)
+					const bodyContentRegex = /<body[^>]*>([\s\S]*)<\/body>/i;
+					const [, data] = text.match(bodyContentRegex);
 	
 					// utilizar la api de View Transition API
-					document.startViewTransition(() =>{
-						//el scroll hacia ariiba del todo
+					document.startViewTransition(() => {
+						// el scroll hacia arriba del todo
 						document.body.innerHTML = data
 						document.documentElement.scrollTop = 0
 					})
@@ -54,17 +77,3 @@ const { title } = Astro.props;
 		})
 	}
 </script>
-<style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>
